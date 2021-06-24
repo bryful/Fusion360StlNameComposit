@@ -110,7 +110,7 @@ namespace Fusion360StlNameComposit
 				foreach (string s in cmd)
 				{
 					StlName sn = new StlName(s);
-					textBox1.Text += sn.ToInfo();
+					sn.Rename();
 				}
 			}
 		}
