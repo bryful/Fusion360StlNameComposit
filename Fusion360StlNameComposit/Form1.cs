@@ -18,6 +18,7 @@ namespace Fusion360StlNameComposit
 {
 	public partial class Form1 : Form
 	{
+		string m_folder = "";
 		//-------------------------------------------------------------
 		/// <summary>
 		/// コンストラクタ
@@ -50,6 +51,8 @@ namespace Fusion360StlNameComposit
 				if (ok) this.Size = sz;
 				Point p = pref.GetPoint("Point", out ok);
 				if (ok) this.Location = p;
+				string f = pref.GetString("Folder" ,out ok);
+				if (ok) m_folder = f;
 			}
 			this.Text = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
 		}
@@ -66,7 +69,7 @@ namespace Fusion360StlNameComposit
 			pref.SetSize("Size", this.Size);
 			pref.SetPoint("Point", this.Location);
 
-			pref.SetIntArray("IntArray", new int[] { 8, 9, 7 });
+			pref.SetString("Folder", m_folder);
 			pref.Save();
 
 		}
@@ -109,8 +112,10 @@ namespace Fusion360StlNameComposit
 			{
 				foreach (string s in cmd)
 				{
-					StlName sn = new StlName(s);
-					sn.Rename();
+					if (GetFolder(s)==true)
+					{
+						break;
+					}
 				}
 			}
 		}
@@ -129,44 +134,66 @@ namespace Fusion360StlNameComposit
 		{
 			AppInfoDialog.ShowAppInfoDialog();
 		}
-		private void button1_Click(object sender, EventArgs e)
+		public bool GetFolder(string p)
 		{
+			bool ret = false;
+			BtnExec.Enabled = false;
+			ret = stlList1.GetFolder(p);
+			if (stlList1.Items.Count>0)
+			{
+				BtnExec.Enabled = true;
+			}
+			return ret;
+		}
+		public bool Exec()
+		{
+			bool ret = false;
+			if (stlList1.Items.Count > 0)
+			{
+				ret = stlList1.Rename();
+			}
+			BtnExec.Enabled = (stlList1.Items.Count > 0);
 
-			JsonPref j = new JsonPref();
+			return ret;
+		}
+		public bool SelectFolder()
+		{
+			bool ret = false;
 
-			int[] aaa = new int[] { 78, 9, 12 };
-			double[] bbb = new double[] { 0.7, 0.01, 0.12 };
-			string[] ccc = new string[] { "eee", "sfskjbF", "13" };
-			j.SetIntArray("aa", aaa);
-			j.SetDoubleArray("bb", bbb);
-			j.SetStringArray("cc", ccc);
+			using (var ofd = new OpenFileDialog() { FileName = "　", Filter = "Folder|.", CheckFileExists = false })
+			{
+				ofd.FileName = "フォルダを選択";
+				if( Directory.Exists( m_folder)==true)
+				{
+					ofd.InitialDirectory = m_folder;
+				}
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					string p = Path.GetDirectoryName(ofd.FileName);
+					ret = GetFolder(p);
+					if(ret)
+					{
+						m_folder = p;
+					}
 
-			MessageBox.Show(j.ToJson());
-
+				}
+			}
+			return ret;
 		}
 
+		private void SelectFolderMenu_Click(object sender, EventArgs e)
+		{
+			SelectFolder();
+		}
 
-		/*
-private void button1_Click(object sender, EventArgs e)
-{
-	dynamic a = new DynamicJson();
-	a.fff = new string[] { "a", "B" };
-	a.fff = "12";
-	//a.fff = new { aaa=12, ccc="www" };
+		private void BtnExec_Click(object sender, EventArgs e)
+		{
+			Exec();
+		}
 
-	MessageBox.Show(a.fff.GetType().ToString());
-
-	JsonPref s = new JsonPref();
-	s.AddInt("aaa", 99);
-	string ss = s.ToJson();
-	MessageBox.Show(ss);
-	s.Parse(ss);
-	string sss = s.ToJson();
-	MessageBox.Show(sss);
-
-	int i = s.GetInt("aaa");
-	MessageBox.Show(String.Format("{0}", i));
-}
-*/
+		private void execMenu_Click(object sender, EventArgs e)
+		{
+			Exec();
+		}
 	}
 }

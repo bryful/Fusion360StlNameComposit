@@ -29,18 +29,20 @@ namespace Fusion360StlNameComposit
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SelectFolderMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.stlList1 = new Fusion360StlNameComposit.StlList();
+			this.BtnExec = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.execMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -59,41 +61,32 @@ namespace Fusion360StlNameComposit
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
+            this.SelectFolderMenu,
             this.quitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
-			// openToolStripMenuItem
+			// SelectFolderMenu
 			// 
-			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
-			this.openToolStripMenuItem.Text = "Open";
-			// 
-			// saveToolStripMenuItem
-			// 
-			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
-			this.saveToolStripMenuItem.Text = "Save";
-			// 
-			// saveAsToolStripMenuItem
-			// 
-			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
-			this.saveAsToolStripMenuItem.Text = "SaveAs";
+			this.SelectFolderMenu.Name = "SelectFolderMenu";
+			this.SelectFolderMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			this.SelectFolderMenu.Size = new System.Drawing.Size(180, 22);
+			this.SelectFolderMenu.Text = "SelectFolder";
+			this.SelectFolderMenu.Click += new System.EventHandler(this.SelectFolderMenu_Click);
 			// 
 			// quitToolStripMenuItem
 			// 
 			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-			this.quitToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+			this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.quitToolStripMenuItem.Text = "Quit";
 			this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
 			// 
 			// editToolStripMenuItem
 			// 
+			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.execMenu});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.editToolStripMenuItem.Text = "Edit";
@@ -121,25 +114,61 @@ namespace Fusion360StlNameComposit
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// listBox1
+			// stlList1
 			// 
-			this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.stlList1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(12, 111);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(571, 268);
-			this.listBox1.TabIndex = 2;
+			this.stlList1.Folder = "";
+			this.stlList1.FormattingEnabled = true;
+			this.stlList1.ItemHeight = 12;
+			this.stlList1.Location = new System.Drawing.Point(12, 108);
+			this.stlList1.Name = "stlList1";
+			this.stlList1.Size = new System.Drawing.Size(567, 232);
+			this.stlList1.TabIndex = 2;
+			// 
+			// BtnExec
+			// 
+			this.BtnExec.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnExec.Enabled = false;
+			this.BtnExec.Location = new System.Drawing.Point(374, 346);
+			this.BtnExec.Name = "BtnExec";
+			this.BtnExec.Size = new System.Drawing.Size(205, 45);
+			this.BtnExec.TabIndex = 3;
+			this.BtnExec.Text = "振り分け実行";
+			this.BtnExec.UseVisualStyleBackColor = true;
+			this.BtnExec.Click += new System.EventHandler(this.BtnExec_Click);
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(52, 28);
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox1.Location = new System.Drawing.Point(13, 28);
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(330, 77);
-			this.textBox1.TabIndex = 3;
+			this.textBox1.ReadOnly = true;
+			this.textBox1.Size = new System.Drawing.Size(566, 38);
+			this.textBox1.TabIndex = 4;
+			this.textBox1.Text = " Fusion360でstlをまとめて書き出し（右クリックでSTL形式で保存）を行うとファイル名が長くて面倒なのでコンポーネント毎にフォルダ分けするアプリです。";
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Location = new System.Drawing.Point(13, 73);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(566, 32);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "ここにフォルダをドラッグ＆ドロップ";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// execMenu
+			// 
+			this.execMenu.Name = "execMenu";
+			this.execMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+			this.execMenu.Size = new System.Drawing.Size(180, 22);
+			this.execMenu.Text = "振り分け実行";
+			this.execMenu.Click += new System.EventHandler(this.execMenu_Click);
 			// 
 			// Form1
 			// 
@@ -147,10 +176,13 @@ namespace Fusion360StlNameComposit
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(591, 416);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.BtnExec);
+			this.Controls.Add(this.stlList1);
 			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.listBox1);
 			this.Controls.Add(this.menuStrip1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -169,16 +201,17 @@ namespace Fusion360StlNameComposit
 
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem SelectFolderMenu;
 		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ListBox listBox1;
+		private StlList stlList1;
+		private System.Windows.Forms.Button BtnExec;
 		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ToolStripMenuItem execMenu;
 	}
 }
 

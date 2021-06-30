@@ -55,15 +55,6 @@ namespace Fusion360StlNameComposit
 
 
 			// 最後のコンポーネント名を消す。
-			// とりあえずあったらEmptyにしておく
-			/*
-			if ((na[na.Length-1]!="")&&(na.Length>=4))
-			{
-				if (na[na.Length-1] == na[na.Length - 4])
-				{
-					na[na.Length - 1] = "";
-				}
-			}*/
 			Array.Resize(ref na, na.Length - 1);
 
 			m_Org = s;

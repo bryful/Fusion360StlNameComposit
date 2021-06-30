@@ -93,7 +93,7 @@ namespace BRY
 			// button1
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(289, 170);
+			this.button1.Location = new System.Drawing.Point(384, 160);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(95, 33);
 			this.button1.TabIndex = 5;
@@ -116,7 +116,7 @@ namespace BRY
 			this.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
 			this.pictureBox2.Location = new System.Drawing.Point(3, 46);
 			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(389, 55);
+			this.pictureBox2.Size = new System.Drawing.Size(511, 55);
 			this.pictureBox2.TabIndex = 7;
 			this.pictureBox2.TabStop = false;
 			// 
@@ -125,7 +125,7 @@ namespace BRY
 			this.AcceptButton = this.button1;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(396, 215);
+			this.ClientSize = new System.Drawing.Size(518, 215);
 			this.Controls.Add(this.lbProduct);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.lbDescription);
